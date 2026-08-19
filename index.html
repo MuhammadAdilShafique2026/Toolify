@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Free online tools including password generator, calculator, age calculator, percentage calculator, word counter, stopwatch and more.">
+
+  <title>Toolify — Free Online Tools</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">
+      Tool<span>ify</span>
+    </div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <button id="themeBtn" class="icon-btn">🌙</button>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+
+    <div class="hero-content">
+
+      <span class="badge">⚡ FREE ONLINE TOOLS</span>
+
+      <h1>
+        Everything You Need,
+        <span>In One Place.</span>
+      </h1>
+
+      <p>
+        Powerful, fast and free online tools for everyday tasks.
+        No registration required.
+      </p>
+
+      <div class="search-box">
+        <span>🔎</span>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search a tool..."
+        >
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TOP AD -->
+  <div class="container">
+    <div class="ad-box">
+      Advertisement
+    </div>
+  </div>
+
+
+  <!-- TOOLS -->
+  <main class="container" id="tools">
+
+    <div class="section-heading">
+      <div>
+        <span class="mini-title">TOOLS</span>
+        <h2>Popular Tools</h2>
+      </div>
+
+      <span id="toolCount">15 tools</span>
+    </div>
+
+
+    <div class="tools-grid" id="toolsGrid">
+
+      <!-- PASSWORD -->
+      <article class="tool-card" data-name="password generator">
+        <div class="tool-icon">🔐</div>
+        <h3>Password Generator</h3>
+        <p>Create strong random passwords instantly.</p>
+        <button onclick="openTool('password')">Open Tool →</button>
+      </article>
+
+
+      <!-- CALCULATOR -->
+      <article class="tool-card" data-name="calculator">
+        <div class="tool-icon">🧮</div>
+        <h3>Calculator</h3>
+        <p>Perform basic mathematical calculations.</p>
+        <button onclick="openTool('calculator')">Open Tool →</button>
+      </article>
+
+
+      <!-- AGE -->
+      <article class="tool-card" data-name="age calculator">
+        <div class="tool-icon">🎂</div>
+        <h3>Age Calculator</h3>
+        <p>Calculate your exact age in years, months and days.</p>
+        <button onclick="openTool('age')">Open Tool →</button>
+      </article>
+
+
+      <!-- PERCENTAGE -->
+      <article class="tool-card" data-name="percentage calculator">
+        <div class="tool-icon">📊</div>
+        <h3>Percentage Calculator</h3>
+        <p>Calculate percentages quickly and easily.</p>
+        <button onclick="openTool('percentage')">Open Tool →</button>
+      </article>
+
+
+      <!-- CURRENCY -->
+      <article class="tool-card" data-name="currency converter">
+        <div class="tool-icon">💱</div>
+        <h3>Currency Converter</h3>
+        <p>Convert currencies using your own exchange rate.</p>
+        <button onclick="openTool('currency')">Open Tool →</button>
+      </article>
+
+
+      <!-- UNIT -->
+      <article class="tool-card" data-name="unit converter">
+        <div class="tool-icon">📏</div>
+        <h3>Unit Converter</h3>
+        <p>Convert length, weight and temperature units.</p>
+        <button onclick="openTool('unit')">Open Tool →</button>
+      </article>
+
+
+      <!-- WORD -->
+      <article class="tool-card" data-name="word counter">
+        <div class="tool-icon">📝</div>
+        <h3>Word Counter</h3>
+        <p>Count words, characters and sentences.</p>
+        <button onclick="openTool('word')">Open Tool →</button>
+      </article>
+
+
+      <!-- STOPWATCH -->
+      <article class="tool-card" data-name="stopwatch">
+        <div class="tool-icon">⏱️</div>
+        <h3>Stopwatch</h3>
+        <p>Simple and accurate online stopwatch.</p>
+        <button onclick="openTool('stopwatch')">Open Tool →</button>
+      </article>
+
+
+      <!-- COUNTDOWN -->
+      <article class="tool-card" data-name="countdown timer">
+        <div class="tool-icon">⏰</div>
+        <h3>Countdown Timer</h3>
+        <p>Create a custom countdown timer.</p>
+        <button onclick="openTool('countdown')">Open Tool →</button>
+      </article>
+
+
+      <!-- DATE -->
+      <article class="tool-card" data-name="date difference">
+        <div class="tool-icon">📅</div>
+        <h3>Date Difference</h3>
+        <p>Find the number of days between two dates.</p>
+        <button onclick="openTool('date')">Open Tool →</button>
+      </article>
+
+
+      <!-- COLOR -->
+      <article class="tool-card" data-name="color converter">
+        <div class="tool-icon">🎨</div>
+        <h3>Color Converter</h3>
+        <p>Convert HEX colors to RGB and vice versa.</p>
+        <button onclick="openTool('color')">Open Tool →</button>
+      </article>
+
+
+      <!-- IMAGE RESIZER -->
+      <article class="tool-card" data-name="image resizer">
+        <div class="tool-icon">🖼️</div>
+        <h3>Image Resizer</h3>
+        <p>Resize images directly in your browser.</p>
+        <button onclick="openTool('image')">Open Tool →</button>
+      </article>
+
+
+      <!-- IMAGE COMPRESSOR -->
+      <article class="tool-card" data-name="image compressor">
+        <div class="tool-icon">🗜️</div>
+        <h3>Image Compressor</h3>
+        <p>Compress images without uploading them.</p>
+        <button onclick="openTool('compressor')">Open Tool →</button>
+      </article>
+
+
+      <!-- NUMBER -->
+      <article class="tool-card" data-name="number converter">
+        <div class="tool-icon">🔢</div>
+        <h3>Number Converter</h3>
+        <p>Convert decimal, binary, hexadecimal and octal.</p>
+        <button onclick="openTool('number')">Open Tool →</button>
+      </article>
+
+
+      <!-- CASE -->
+      <article class="tool-card" data-name="case converter">
+        <div class="tool-icon">🔤</div>
+        <h3>Case Converter</h3>
+        <p>Convert text to uppercase, lowercase and more.</p>
+        <button onclick="openTool('case')">Open Tool →</button>
+      </article>
+
+    </div>
+
+  </main>
+
+
+  <!-- TOOL MODAL -->
+
+  <div id="modal" class="modal">
+
+    <div class="modal-content">
+
+      <button class="close-btn" onclick="closeTool()">×</button>
+
+      <div id="toolContent"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MIDDLE AD -->
+
+  <div class="container">
+    <div class="ad-box">
+      Advertisement
+    </div>
+  </div>
+
+
+  <!-- ABOUT -->
+
+  <section class="about" id="about">
+
+    <div class="container">
+
+      <span class="mini-title">ABOUT TOOLIFY</span>
+
+      <h2>Simple tools. Zero hassle.</h2>
+
+      <p>
+        Toolify provides fast and free browser-based tools for everyday
+        calculations, conversions, productivity and digital tasks.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="container footer-content">
+
+      <div class="logo">
+        Tool<span>ify</span>
+      </div>
+
+      <p>
+        © 2026 Toolify. All Rights Reserved.
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
