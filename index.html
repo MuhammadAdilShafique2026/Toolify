@@ -15,8 +15,12 @@
 
 <body>
 
+  <!-- ============================= -->
   <!-- NAVBAR -->
+  <!-- ============================= -->
+
   <header class="navbar">
+
     <div class="logo">
       Tool<span>ify</span>
     </div>
@@ -28,10 +32,14 @@
     </nav>
 
     <button id="themeBtn" class="icon-btn">🌙</button>
+
   </header>
 
 
+  <!-- ============================= -->
   <!-- HERO -->
+  <!-- ============================= -->
+
   <section class="hero" id="home">
 
     <div class="hero-content">
@@ -49,12 +57,15 @@
       </p>
 
       <div class="search-box">
+
         <span>🔎</span>
+
         <input
           type="text"
           id="searchInput"
           placeholder="Search a tool..."
         >
+
       </div>
 
     </div>
@@ -62,161 +73,418 @@
   </section>
 
 
-  <!-- TOP AD -->
+  <!-- ================================================= -->
+  <!-- TOP AD — 728x90 DESKTOP / 320x50 MOBILE -->
+  <!-- ================================================= -->
+
   <div class="container">
-    <div class="ad-box">
-      Advertisement
+
+    <div class="ad-section ad-top">
+
+      <span class="ad-label">Advertisement</span>
+
+      <!--
+        DESKTOP AD:
+        Recommended size: 728x90
+
+        Paste your 728x90 Adsterra code here.
+      -->
+
+      <div class="ad-slot ad-728x90">
+<script>
+  atOptions = {
+    'key' : 'e61162e4a8ee582699185faaa4f2d05a',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/e61162e4a8ee582699185faaa4f2d05a/invoke.js"></script>
+  
+
+      </div>
+
+
+      <!--
+        MOBILE AD:
+        Recommended size: 320x50
+
+        Paste your 320x50 Adsterra code here.
+      -->
+
+      <div class="ad-slot ad-320x50">
+
+<script>
+  atOptions = {
+    'key' : '152f2acd849d03733df50d2962cbd5c2',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/152f2acd849d03733df50d2962cbd5c2/invoke.js"></script>
+
+
+      </div>
+
     </div>
+
   </div>
 
 
+  <!-- ============================= -->
   <!-- TOOLS -->
+  <!-- ============================= -->
+
   <main class="container" id="tools">
 
     <div class="section-heading">
+
       <div>
+
         <span class="mini-title">TOOLS</span>
+
         <h2>Popular Tools</h2>
+
       </div>
 
       <span id="toolCount">15 tools</span>
+
     </div>
 
 
     <div class="tools-grid" id="toolsGrid">
 
+
       <!-- PASSWORD -->
-      <article class="tool-card" data-name="password generator">
+
+      <article
+        class="tool-card"
+        data-name="password generator"
+      >
+
         <div class="tool-icon">🔐</div>
+
         <h3>Password Generator</h3>
-        <p>Create strong random passwords instantly.</p>
-        <button onclick="openTool('password')">Open Tool →</button>
+
+        <p>
+          Create strong random passwords instantly.
+        </p>
+
+        <button onclick="openTool('password')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- CALCULATOR -->
-      <article class="tool-card" data-name="calculator">
+
+      <article
+        class="tool-card"
+        data-name="calculator"
+      >
+
         <div class="tool-icon">🧮</div>
+
         <h3>Calculator</h3>
-        <p>Perform basic mathematical calculations.</p>
-        <button onclick="openTool('calculator')">Open Tool →</button>
+
+        <p>
+          Perform basic mathematical calculations.
+        </p>
+
+        <button onclick="openTool('calculator')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- AGE -->
-      <article class="tool-card" data-name="age calculator">
+
+      <article
+        class="tool-card"
+        data-name="age calculator"
+      >
+
         <div class="tool-icon">🎂</div>
+
         <h3>Age Calculator</h3>
-        <p>Calculate your exact age in years, months and days.</p>
-        <button onclick="openTool('age')">Open Tool →</button>
+
+        <p>
+          Calculate your exact age in years, months and days.
+        </p>
+
+        <button onclick="openTool('age')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- PERCENTAGE -->
-      <article class="tool-card" data-name="percentage calculator">
+
+      <article
+        class="tool-card"
+        data-name="percentage calculator"
+      >
+
         <div class="tool-icon">📊</div>
+
         <h3>Percentage Calculator</h3>
-        <p>Calculate percentages quickly and easily.</p>
-        <button onclick="openTool('percentage')">Open Tool →</button>
+
+        <p>
+          Calculate percentages quickly and easily.
+        </p>
+
+        <button onclick="openTool('percentage')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- CURRENCY -->
-      <article class="tool-card" data-name="currency converter">
+
+      <article
+        class="tool-card"
+        data-name="currency converter"
+      >
+
         <div class="tool-icon">💱</div>
+
         <h3>Currency Converter</h3>
-        <p>Convert currencies using your own exchange rate.</p>
-        <button onclick="openTool('currency')">Open Tool →</button>
+
+        <p>
+          Convert currencies using your own exchange rate.
+        </p>
+
+        <button onclick="openTool('currency')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- UNIT -->
-      <article class="tool-card" data-name="unit converter">
+
+      <article
+        class="tool-card"
+        data-name="unit converter"
+      >
+
         <div class="tool-icon">📏</div>
+
         <h3>Unit Converter</h3>
-        <p>Convert length, weight and temperature units.</p>
-        <button onclick="openTool('unit')">Open Tool →</button>
+
+        <p>
+          Convert length, weight and temperature units.
+        </p>
+
+        <button onclick="openTool('unit')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- WORD -->
-      <article class="tool-card" data-name="word counter">
+
+      <article
+        class="tool-card"
+        data-name="word counter"
+      >
+
         <div class="tool-icon">📝</div>
+
         <h3>Word Counter</h3>
-        <p>Count words, characters and sentences.</p>
-        <button onclick="openTool('word')">Open Tool →</button>
+
+        <p>
+          Count words, characters and sentences.
+        </p>
+
+        <button onclick="openTool('word')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- STOPWATCH -->
-      <article class="tool-card" data-name="stopwatch">
+
+      <article
+        class="tool-card"
+        data-name="stopwatch"
+      >
+
         <div class="tool-icon">⏱️</div>
+
         <h3>Stopwatch</h3>
-        <p>Simple and accurate online stopwatch.</p>
-        <button onclick="openTool('stopwatch')">Open Tool →</button>
+
+        <p>
+          Simple and accurate online stopwatch.
+        </p>
+
+        <button onclick="openTool('stopwatch')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- COUNTDOWN -->
-      <article class="tool-card" data-name="countdown timer">
+
+      <article
+        class="tool-card"
+        data-name="countdown timer"
+      >
+
         <div class="tool-icon">⏰</div>
+
         <h3>Countdown Timer</h3>
-        <p>Create a custom countdown timer.</p>
-        <button onclick="openTool('countdown')">Open Tool →</button>
+
+        <p>
+          Create a custom countdown timer.
+        </p>
+
+        <button onclick="openTool('countdown')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- DATE -->
-      <article class="tool-card" data-name="date difference">
+
+      <article
+        class="tool-card"
+        data-name="date difference"
+      >
+
         <div class="tool-icon">📅</div>
+
         <h3>Date Difference</h3>
-        <p>Find the number of days between two dates.</p>
-        <button onclick="openTool('date')">Open Tool →</button>
+
+        <p>
+          Find the number of days between two dates.
+        </p>
+
+        <button onclick="openTool('date')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- COLOR -->
-      <article class="tool-card" data-name="color converter">
+
+      <article
+        class="tool-card"
+        data-name="color converter"
+      >
+
         <div class="tool-icon">🎨</div>
+
         <h3>Color Converter</h3>
-        <p>Convert HEX colors to RGB and vice versa.</p>
-        <button onclick="openTool('color')">Open Tool →</button>
+
+        <p>
+          Convert HEX colors to RGB and vice versa.
+        </p>
+
+        <button onclick="openTool('color')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- IMAGE RESIZER -->
-      <article class="tool-card" data-name="image resizer">
+
+      <article
+        class="tool-card"
+        data-name="image resizer"
+      >
+
         <div class="tool-icon">🖼️</div>
+
         <h3>Image Resizer</h3>
-        <p>Resize images directly in your browser.</p>
-        <button onclick="openTool('image')">Open Tool →</button>
+
+        <p>
+          Resize images directly in your browser.
+        </p>
+
+        <button onclick="openTool('image')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- IMAGE COMPRESSOR -->
-      <article class="tool-card" data-name="image compressor">
+
+      <article
+        class="tool-card"
+        data-name="image compressor"
+      >
+
         <div class="tool-icon">🗜️</div>
+
         <h3>Image Compressor</h3>
-        <p>Compress images without uploading them.</p>
-        <button onclick="openTool('compressor')">Open Tool →</button>
+
+        <p>
+          Compress images without uploading them.
+        </p>
+
+        <button onclick="openTool('compressor')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- NUMBER -->
-      <article class="tool-card" data-name="number converter">
+
+      <article
+        class="tool-card"
+        data-name="number converter"
+      >
+
         <div class="tool-icon">🔢</div>
+
         <h3>Number Converter</h3>
-        <p>Convert decimal, binary, hexadecimal and octal.</p>
-        <button onclick="openTool('number')">Open Tool →</button>
+
+        <p>
+          Convert decimal, binary, hexadecimal and octal.
+        </p>
+
+        <button onclick="openTool('number')">
+          Open Tool →
+        </button>
+
       </article>
 
 
       <!-- CASE -->
-      <article class="tool-card" data-name="case converter">
+
+      <article
+        class="tool-card"
+        data-name="case converter"
+      >
+
         <div class="tool-icon">🔤</div>
+
         <h3>Case Converter</h3>
-        <p>Convert text to uppercase, lowercase and more.</p>
-        <button onclick="openTool('case')">Open Tool →</button>
+
+        <p>
+          Convert text to uppercase, lowercase and more.
+        </p>
+
+        <button onclick="openTool('case')">
+          Open Tool →
+        </button>
+
       </article>
 
     </div>
@@ -224,39 +492,81 @@
   </main>
 
 
-  <!-- TOOL MODAL -->
-
-  <div id="modal" class="modal">
-
-    <div class="modal-content">
-
-      <button class="close-btn" onclick="closeTool()">×</button>
-
-      <div id="toolContent"></div>
-
-    </div>
-
-  </div>
-
-
-  <!-- MIDDLE AD -->
+  <!-- ================================================= -->
+  <!-- MIDDLE 300x250 AD -->
+  <!-- ================================================= -->
 
   <div class="container">
-    <div class="ad-box">
-      Advertisement
+
+    <div class="ad-section ad-middle">
+
+      <span class="ad-label">ADVERTISEMENT</span>
+
+      <div class="ad-slot ad-300x250">
+<script>
+  atOptions = {
+    'key' : 'fa41d1e93cbd0552944cf6c73880b0c4',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/fa41d1e93cbd0552944cf6c73880b0c4/invoke.js"></script>
+
+      </div>
+
     </div>
+
   </div>
 
 
+  <!-- ================================================= -->
+  <!-- NATIVE BANNER -->
+  <!-- ================================================= -->
+
+  <section class="native-ad-section">
+
+    <div class="container">
+
+      <span class="ad-label">ADVERTISEMENT</span>
+
+      <div class="native-ad">
+
+        <!--
+          NATIVE BANNER AD
+
+          Paste your Adsterra Native Banner code here.
+
+          DO NOT put the 300x250 code here.
+        -->
+
+        <script async="async" data-cfasync="false" src="https://pl30922832.effectivecpmnetwork.com/999780c2cb68074e530c25ee2ed45f13/invoke.js"></script>
+<div id="container-999780c2cb68074e530c25ee2ed45f13"></div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================================================= -->
   <!-- ABOUT -->
+  <!-- ================================================= -->
 
   <section class="about" id="about">
 
     <div class="container">
 
-      <span class="mini-title">ABOUT TOOLIFY</span>
+      <span class="mini-title">
+        ABOUT TOOLIFY
+      </span>
 
-      <h2>Simple tools. Zero hassle.</h2>
+      <h2>
+        Simple tools. Zero hassle.
+      </h2>
 
       <p>
         Toolify provides fast and free browser-based tools for everyday
@@ -268,7 +578,9 @@
   </section>
 
 
+  <!-- ================================================= -->
   <!-- FOOTER -->
+  <!-- ================================================= -->
 
   <footer>
 
@@ -285,6 +597,26 @@
     </div>
 
   </footer>
+
+
+  <!-- TOOL MODAL -->
+
+  <div id="modal" class="modal">
+
+    <div class="modal-content">
+
+      <button
+        class="close-btn"
+        onclick="closeTool()"
+      >
+        ×
+      </button>
+
+      <div id="toolContent"></div>
+
+    </div>
+
+  </div>
 
 
   <script src="script.js"></script>

@@ -2,49 +2,31 @@
    TOOLIFY - MAIN JAVASCRIPT
 ========================================= */
 
-const modal = document.getElementById("modal");
-const toolContent = document.getElementById("toolContent");
-
 
 /* =========================================
-   DARK MODE
+   DARK / LIGHT MODE
 ========================================= */
 
-const themeBtn =
-  document.getElementById("themeBtn");
+const themeBtn = document.getElementById("themeBtn");
 
 themeBtn.addEventListener("click", () => {
 
   document.body.classList.toggle("dark");
 
-  if (
-    document.body.classList.contains("dark")
-  ) {
-
+  if (document.body.classList.contains("dark")) {
     themeBtn.textContent = "☀️";
-
-    localStorage.setItem(
-      "theme",
-      "dark"
-    );
-
+    localStorage.setItem("toolifyTheme", "dark");
   } else {
-
     themeBtn.textContent = "🌙";
-
-    localStorage.setItem(
-      "theme",
-      "light"
-    );
-
+    localStorage.setItem("toolifyTheme", "light");
   }
 
 });
 
 
-if (
-  localStorage.getItem("theme") === "dark"
-) {
+/* Load saved theme */
+
+if (localStorage.getItem("toolifyTheme") === "dark") {
 
   document.body.classList.add("dark");
 
@@ -54,36 +36,34 @@ if (
 
 
 /* =========================================
-   SEARCH
+   SEARCH TOOLS
 ========================================= */
 
-const searchInput =
-  document.getElementById("searchInput");
+const searchInput = document.getElementById("searchInput");
+const toolsGrid = document.getElementById("toolsGrid");
+const toolCount = document.getElementById("toolCount");
 
-const toolCards =
-  document.querySelectorAll(".tool-card");
-
-const toolCount =
-  document.getElementById("toolCount");
+const toolCards = document.querySelectorAll(".tool-card");
 
 
 searchInput.addEventListener("input", () => {
 
-  const query =
+  const searchValue =
     searchInput.value.toLowerCase().trim();
 
-  let visible = 0;
+  let visibleTools = 0;
+
 
   toolCards.forEach(card => {
 
     const name =
-      card.dataset.name;
+      card.dataset.name.toLowerCase();
 
-    if (name.includes(query)) {
+    if (name.includes(searchValue)) {
 
       card.style.display = "";
 
-      visible++;
+      visibleTools++;
 
     } else {
 
@@ -93,80 +73,89 @@ searchInput.addEventListener("input", () => {
 
   });
 
+
   toolCount.textContent =
-    visible + " tools";
+    `${visibleTools} ${visibleTools === 1 ? "tool" : "tools"}`;
 
 });
 
 
 /* =========================================
-   OPEN / CLOSE TOOL
+   MODAL
 ========================================= */
+
+const modal = document.getElementById("modal");
+const toolContent = document.getElementById("toolContent");
+
 
 function openTool(tool) {
 
   modal.classList.add("active");
 
+  document.body.style.overflow = "hidden";
+
+  toolContent.innerHTML = "";
+
   switch (tool) {
 
     case "password":
-      passwordTool();
+      passwordGenerator();
       break;
 
     case "calculator":
-      calculatorTool();
+      calculator();
       break;
 
     case "age":
-      ageTool();
+      ageCalculator();
       break;
 
     case "percentage":
-      percentageTool();
+      percentageCalculator();
       break;
 
     case "currency":
-      currencyTool();
+      currencyConverter();
       break;
 
     case "unit":
-      unitTool();
+      unitConverter();
       break;
 
     case "word":
-      wordTool();
+      wordCounter();
       break;
 
     case "stopwatch":
-      stopwatchTool();
+      stopwatch();
       break;
 
     case "countdown":
-      countdownTool();
+      countdownTimer();
       break;
 
     case "date":
-      dateTool();
+      dateDifference();
       break;
 
     case "color":
-      colorTool();
+      colorConverter();
       break;
 
     case "image":
-      imageTool();
+      imageResizer();
       break;
 
     case "compressor":
-      compressorTool();
+      imageCompressor();
       break;
 
     case "number":
-      numberTool();
+      numberConverter();
       break;
 
     case "case":
-      caseTool();
+      caseConverter();
       break;
 
   }
@@ -178,17 +167,28 @@ function closeTool() {
 
   modal.classList.remove("active");
 
-  toolContent.innerHTML = "";
+  document.body.style.overflow = "";
 
 }
 
 
-modal.addEventListener("click", e => {
+/* Close modal by clicking outside */
+
+modal.addEventListener("click", (e) => {
 
   if (e.target === modal) {
-
     closeTool();
+  }
 
+});
+
+
+/* ESC key */
+
+document.addEventListener("keydown", (e) => {
+
+  if (e.key === "Escape") {
+    closeTool();
   }
 
 });
@@ -198,80 +198,71 @@ modal.addEventListener("click", e => {
    PASSWORD GENERATOR
 ========================================= */
 
-function passwordTool() {
+function passwordGenerator() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      🔐 Password Generator
+      Password Generator
     </h2>
 
     <p class="tool-description">
-      Generate a secure random password.
+      Generate a strong random password.
     </p>
 
-    <label>Password Length</label>
+    <div class="tool-row">
 
-    <input
-      id="passLength"
-      class="tool-input"
-      type="number"
-      min="4"
-      max="64"
-      value="16"
-    >
+      <input
+        type="number"
+        id="passwordLength"
+        class="tool-input"
+        value="16"
+        min="4"
+        max="100"
+        placeholder="Length"
+      >
 
-    <label>
-      <input id="upper" type="checkbox" checked>
-      Uppercase
-    </label>
-    <br>
+      <select
+        id="passwordType"
+        class="tool-select"
+      >
 
-    <label>
-      <input id="lower" type="checkbox" checked>
-      Lowercase
-    </label>
-    <br>
+        <option value="all">
+          Letters + Numbers + Symbols
+        </option>
 
-    <label>
-      <input id="numbers" type="checkbox" checked>
-      Numbers
-    </label>
-    <br>
+        <option value="letters">
+          Letters Only
+        </option>
 
-    <label>
-      <input id="symbols" type="checkbox" checked>
-      Symbols
-    </label>
+        <option value="numbers">
+          Numbers Only
+        </option>
+
+      </select>
+
+    </div>
 
     <button
       class="primary-btn"
-      onclick="generatePassword()">
+      onclick="generatePassword()"
+    >
       Generate Password
     </button>
 
     <div
       id="passwordResult"
-      class="result-box">
-      Click Generate Password
+      class="result-box"
+    >
+      Your password will appear here.
     </div>
 
     <button
       class="copy-btn"
-      onclick="copyText('passwordResult')">
-      📋 Copy Password
+      onclick="copyText('passwordResult')"
+    >
+      Copy Password
     </button>
-
-    <div class="strength">
-      <div
-        id="strengthBar"
-        class="strength-bar">
-      </div>
-    </div>
-
-    <p id="strengthText">
-      Strength: —
-    </p>
 
   `;
 
@@ -281,120 +272,52 @@ function passwordTool() {
 function generatePassword() {
 
   const length =
-    Math.max(
-      4,
-      Math.min(
-        64,
-        Number(
-          document.getElementById(
-            "passLength"
-          ).value
-        )
-      )
-    );
+    Number(document.getElementById("passwordLength").value);
+
+  const type =
+    document.getElementById("passwordType").value;
 
   let chars = "";
 
-  if (
-    document.getElementById("upper").checked
-  )
-    chars +=
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (type === "all") {
 
-  if (
-    document.getElementById("lower").checked
-  )
-    chars +=
-      "abcdefghijklmnopqrstuvwxyz";
-
-  if (
-    document.getElementById("numbers").checked
-  )
-    chars +=
-      "0123456789";
-
-  if (
-    document.getElementById("symbols").checked
-  )
-    chars +=
-      "!@#$%^&*()_+-=[]{}|;:,.<>?";
-
-  if (!chars) {
-
-    alert(
-      "Select at least one character type."
-    );
-
-    return;
+    chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+      "abcdefghijklmnopqrstuvwxyz" +
+      "0123456789" +
+      "!@#$%^&*()_+-=[]{}<>?";
 
   }
 
-  const array =
-    new Uint32Array(length);
+  if (type === "letters") {
 
-  crypto.getRandomValues(array);
+    chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+  }
+
+  if (type === "numbers") {
+
+    chars =
+      "0123456789";
+
+  }
+
 
   let password = "";
 
   for (let i = 0; i < length; i++) {
 
     password +=
-      chars[array[i] % chars.length];
+      chars.charAt(
+        Math.floor(Math.random() * chars.length)
+      );
 
   }
 
-  document.getElementById(
-    "passwordResult"
-  ).textContent = password;
 
-
-  let score = 0;
-
-  if (length >= 12) score++;
-
-  if (length >= 16) score++;
-
-  if (chars.match(/[A-Z]/)) score++;
-
-  if (chars.match(/[0-9]/)) score++;
-
-  if (chars.match(/[^A-Za-z0-9]/))
-    score++;
-
-
-  const bar =
-    document.getElementById(
-      "strengthBar"
-    );
-
-  const text =
-    document.getElementById(
-      "strengthText"
-    );
-
-
-  if (score <= 2) {
-
-    bar.style.width = "30%";
-
-    text.textContent =
-      "Strength: Weak";
-
-  } else if (score <= 4) {
-
-    bar.style.width = "65%";
-
-    text.textContent =
-      "Strength: Medium";
-
-  } else {
-
-    bar.style.width = "100%";
-
-    text.textContent =
-      "Strength: Strong";
-
-  }
+  document.getElementById("passwordResult")
+    .textContent = password;
 
 }
 
@@ -403,34 +326,35 @@ function generatePassword() {
    CALCULATOR
 ========================================= */
 
-function calculatorTool() {
+function calculator() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      🧮 Calculator
+      Calculator
     </h2>
 
     <p class="tool-description">
-      Perform basic calculations.
+      Perform basic mathematical calculations.
     </p>
 
     <input
       id="calcInput"
       class="tool-input"
-      type="text"
-      placeholder="Example: 25 * 4 + 10"
+      placeholder="Example: 25 + 10 * 2"
     >
 
     <button
       class="primary-btn"
-      onclick="calculate()">
+      onclick="calculateResult()"
+    >
       Calculate
     </button>
 
     <div
       id="calcResult"
-      class="tool-result">
+      class="tool-result"
+    >
       Result will appear here.
     </div>
 
@@ -439,38 +363,30 @@ function calculatorTool() {
 }
 
 
-function calculate() {
+function calculateResult() {
 
-  const value =
-    document.getElementById(
-      "calcInput"
-    ).value;
+  const expression =
+    document.getElementById("calcInput").value;
 
-  const result =
-    document.getElementById(
-      "calcResult"
-    );
-
-  if (!/^[0-9+\-*/().%\s]+$/.test(value)) {
-
-    result.textContent =
-      "Invalid calculation.";
-
-    return;
-
-  }
+  const resultBox =
+    document.getElementById("calcResult");
 
   try {
 
-    result.textContent =
-      Function(
-        `"use strict"; return (${value})`
-      )();
+    if (!/^[0-9+\-*/().%\s]+$/.test(expression)) {
+      throw new Error();
+    }
+
+    const result =
+      Function(`"use strict"; return (${expression})`)();
+
+    resultBox.textContent =
+      `Result: ${result}`;
 
   } catch {
 
-    result.textContent =
-      "Invalid calculation.";
+    resultBox.textContent =
+      "Please enter a valid calculation.";
 
   }
 
@@ -481,34 +397,35 @@ function calculate() {
    AGE CALCULATOR
 ========================================= */
 
-function ageTool() {
+function ageCalculator() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      🎂 Age Calculator
+      Age Calculator
     </h2>
 
     <p class="tool-description">
-      Calculate your current age.
+      Calculate your exact age.
     </p>
 
     <input
+      type="date"
       id="birthDate"
       class="tool-input"
-      type="date"
     >
 
     <button
       class="primary-btn"
-      onclick="calculateAge()">
+      onclick="calculateAge()"
+    >
       Calculate Age
     </button>
 
     <div
       id="ageResult"
-      class="tool-result">
-    </div>
+      class="tool-result"
+    ></div>
 
   `;
 
@@ -517,44 +434,46 @@ function ageTool() {
 
 function calculateAge() {
 
-  const input =
-    document.getElementById(
-      "birthDate"
-    ).value;
-
-  if (!input) return;
-
   const birth =
-    new Date(input);
+    new Date(document.getElementById("birthDate").value);
 
-  const today =
-    new Date();
+  const today = new Date();
+
+  if (!document.getElementById("birthDate").value) {
+
+    document.getElementById("ageResult").textContent =
+      "Please select your birth date.";
+
+    return;
+
+  }
+
 
   let years =
-    today.getFullYear()
-    - birth.getFullYear();
+    today.getFullYear() - birth.getFullYear();
 
   let months =
-    today.getMonth()
-    - birth.getMonth();
+    today.getMonth() - birth.getMonth();
 
   let days =
-    today.getDate()
-    - birth.getDate();
+    today.getDate() - birth.getDate();
 
 
   if (days < 0) {
 
     months--;
 
-    days +=
+    const previousMonth =
       new Date(
         today.getFullYear(),
         today.getMonth(),
         0
-      ).getDate();
+      );
+
+    days += previousMonth.getDate();
 
   }
+
 
   if (months < 0) {
 
@@ -565,15 +484,15 @@ function calculateAge() {
   }
 
 
-  document.getElementById(
-    "ageResult"
-  ).innerHTML = `
+  document.getElementById("ageResult").innerHTML = `
 
     <strong>
       ${years} Years
-      ${months} Months
-      ${days} Days
-    </strong>
+    </strong><br>
+
+    ${months} Months<br>
+
+    ${days} Days
 
   `;
 
@@ -581,46 +500,46 @@ function calculateAge() {
 
 
 /* =========================================
-   PERCENTAGE
+   PERCENTAGE CALCULATOR
 ========================================= */
 
-function percentageTool() {
+function percentageCalculator() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      📊 Percentage Calculator
+      Percentage Calculator
     </h2>
 
     <p class="tool-description">
-      Calculate what percentage one number is of another.
+      Calculate percentages quickly.
     </p>
 
     <input
-      id="percentA"
-      class="tool-input"
       type="number"
-      placeholder="Value"
+      id="percentValue"
+      class="tool-input"
+      placeholder="Percentage"
     >
 
     <input
-      id="percentB"
-      class="tool-input"
       type="number"
-      placeholder="Total"
+      id="percentTotal"
+      class="tool-input"
+      placeholder="Total Number"
     >
 
     <button
       class="primary-btn"
-      onclick="calculatePercentage()">
+      onclick="calculatePercentage()"
+    >
       Calculate
     </button>
 
     <div
       id="percentResult"
-      class="big-number">
-      0%
-    </div>
+      class="tool-result"
+    ></div>
 
   `;
 
@@ -629,83 +548,64 @@ function percentageTool() {
 
 function calculatePercentage() {
 
-  const a =
-    Number(
-      document.getElementById(
-        "percentA"
-      ).value
-    );
+  const percentage =
+    Number(document.getElementById("percentValue").value);
 
-  const b =
-    Number(
-      document.getElementById(
-        "percentB"
-      ).value
-    );
+  const total =
+    Number(document.getElementById("percentTotal").value);
 
-  if (!b) return;
 
-  document.getElementById(
-    "percentResult"
-  ).textContent =
-    ((a / b) * 100).toFixed(2) + "%";
+  const result =
+    (percentage / 100) * total;
+
+
+  document.getElementById("percentResult").textContent =
+    `${percentage}% of ${total} = ${result}`;
 
 }
 
 
 /* =========================================
-   CURRENCY
+   CURRENCY CONVERTER
 ========================================= */
 
-function currencyTool() {
+function currencyConverter() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      💱 Currency Converter
+      Currency Converter
     </h2>
 
     <p class="tool-description">
-      Enter your current exchange rate.
+      Convert using your own exchange rate.
     </p>
 
     <input
+      type="number"
       id="currencyAmount"
       class="tool-input"
-      type="number"
-      value="1"
       placeholder="Amount"
     >
 
-    <div class="tool-row">
-
-      <input
-        id="currencyRate"
-        class="tool-input"
-        type="number"
-        value="280"
-        placeholder="Exchange rate"
-      >
-
-      <input
-        id="currencyName"
-        class="tool-input"
-        value="PKR"
-        placeholder="Target currency"
-      >
-
-    </div>
+    <input
+      type="number"
+      id="currencyRate"
+      class="tool-input"
+      placeholder="Exchange Rate"
+    >
 
     <button
       class="primary-btn"
-      onclick="convertCurrency()">
+      onclick="convertCurrency()"
+    >
       Convert
     </button>
 
     <div
       id="currencyResult"
-      class="tool-result">
-    </div>
+      class="tool-result"
+    ></div>
 
   `;
 
@@ -715,30 +615,18 @@ function currencyTool() {
 function convertCurrency() {
 
   const amount =
-    Number(
-      document.getElementById(
-        "currencyAmount"
-      ).value
-    );
+    Number(document.getElementById("currencyAmount").value);
 
   const rate =
-    Number(
-      document.getElementById(
-        "currencyRate"
-      ).value
-    );
-
-  const currency =
-    document.getElementById(
-      "currencyName"
-    ).value
-    || "PKR";
+    Number(document.getElementById("currencyRate").value);
 
 
-  document.getElementById(
-    "currencyResult"
-  ).textContent =
-    `${(amount * rate).toFixed(2)} ${currency}`;
+  const result =
+    amount * rate;
+
+
+  document.getElementById("currencyResult").textContent =
+    `Converted Amount: ${result}`;
 
 }
 
@@ -747,61 +635,67 @@ function convertCurrency() {
    UNIT CONVERTER
 ========================================= */
 
-function unitTool() {
+function unitConverter() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      📏 Unit Converter
+      Unit Converter
     </h2>
 
     <p class="tool-description">
-      Convert common length, weight and temperature units.
+      Convert common units.
     </p>
 
     <input
+      type="number"
       id="unitValue"
       class="tool-input"
-      type="number"
-      placeholder="Value"
+      placeholder="Enter value"
     >
 
     <select
-      id="unitFrom"
-      class="tool-select">
+      id="unitType"
+      class="tool-select"
+    >
 
-      <option value="m">Meters</option>
-      <option value="km">Kilometers</option>
-      <option value="cm">Centimeters</option>
-      <option value="ft">Feet</option>
-      <option value="kg">Kilograms</option>
-      <option value="lb">Pounds</option>
+      <option value="km-miles">
+        Kilometers → Miles
+      </option>
 
-    </select>
+      <option value="miles-km">
+        Miles → Kilometers
+      </option>
 
-    <select
-      id="unitTo"
-      class="tool-select">
+      <option value="kg-lb">
+        Kilograms → Pounds
+      </option>
 
-      <option value="m">Meters</option>
-      <option value="km">Kilometers</option>
-      <option value="cm">Centimeters</option>
-      <option value="ft">Feet</option>
-      <option value="kg">Kilograms</option>
-      <option value="lb">Pounds</option>
+      <option value="lb-kg">
+        Pounds → Kilograms
+      </option>
+
+      <option value="c-f">
+        Celsius → Fahrenheit
+      </option>
+
+      <option value="f-c">
+        Fahrenheit → Celsius
+      </option>
 
     </select>
 
     <button
       class="primary-btn"
-      onclick="convertUnit()">
+      onclick="convertUnit()"
+    >
       Convert
     </button>
 
     <div
       id="unitResult"
-      class="tool-result">
-    </div>
+      class="tool-result"
+    ></div>
 
   `;
 
@@ -811,58 +705,45 @@ function unitTool() {
 function convertUnit() {
 
   const value =
-    Number(
-      document.getElementById(
-        "unitValue"
-      ).value
-    );
+    Number(document.getElementById("unitValue").value);
 
-  const from =
-    document.getElementById(
-      "unitFrom"
-    ).value;
+  const type =
+    document.getElementById("unitType").value;
 
-  const to =
-    document.getElementById(
-      "unitTo"
-    ).value;
+  let result;
 
 
-  const units = {
+  switch (type) {
 
-    m: 1,
-    km: 1000,
-    cm: 0.01,
-    ft: 0.3048,
-    kg: 1,
-    lb: 0.453592
+    case "km-miles":
+      result = value * 0.621371;
+      break;
 
-  };
+    case "miles-km":
+      result = value * 1.60934;
+      break;
 
+    case "kg-lb":
+      result = value * 2.20462;
+      break;
 
-  if (
-    (from === "kg" && to !== "kg" && to !== "lb") ||
-    (to === "kg" && from !== "kg" && from !== "lb")
-  ) {
+    case "lb-kg":
+      result = value * 0.453592;
+      break;
 
-    document.getElementById(
-      "unitResult"
-    ).textContent =
-      "Please select compatible units.";
+    case "c-f":
+      result = (value * 9 / 5) + 32;
+      break;
 
-    return;
+    case "f-c":
+      result = (value - 32) * 5 / 9;
+      break;
 
   }
 
 
-  const result =
-    value * units[from] / units[to];
-
-
-  document.getElementById(
-    "unitResult"
-  ).textContent =
-    result.toFixed(4);
+  document.getElementById("unitResult").textContent =
+    `Result: ${result.toFixed(2)}`;
 
 }
 
@@ -871,12 +752,12 @@ function convertUnit() {
    WORD COUNTER
 ========================================= */
 
-function wordTool() {
+function wordCounter() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      📝 Word Counter
+      Word Counter
     </h2>
 
     <p class="tool-description">
@@ -887,12 +768,12 @@ function wordTool() {
       id="wordText"
       class="tool-textarea"
       placeholder="Type or paste your text..."
-      oninput="countWords()">
-    </textarea>
+    ></textarea>
 
     <div
       id="wordResult"
-      class="tool-result">
+      class="tool-result"
+    >
       Words: 0<br>
       Characters: 0<br>
       Sentences: 0
@@ -900,15 +781,17 @@ function wordTool() {
 
   `;
 
+
+  document.getElementById("wordText")
+    .addEventListener("input", updateWordCount);
+
 }
 
 
-function countWords() {
+function updateWordCount() {
 
   const text =
-    document.getElementById(
-      "wordText"
-    ).value;
+    document.getElementById("wordText").value;
 
   const words =
     text.trim()
@@ -920,21 +803,16 @@ function countWords() {
 
   const sentences =
     text.split(/[.!?]+/)
-      .filter(x => x.trim())
-      .length;
+      .filter(s => s.trim()).length;
 
 
-  document.getElementById(
-    "wordResult"
-  ).innerHTML = `
+  document.getElementById("wordResult").innerHTML = `
 
     Words: <strong>${words}</strong><br>
 
-    Characters:
-    <strong>${characters}</strong><br>
+    Characters: <strong>${characters}</strong><br>
 
-    Sentences:
-    <strong>${sentences}</strong>
+    Sentences: <strong>${sentences}</strong>
 
   `;
 
@@ -946,46 +824,44 @@ function countWords() {
 ========================================= */
 
 let stopwatchInterval;
-
 let stopwatchSeconds = 0;
 
-function stopwatchTool() {
 
-  clearInterval(stopwatchInterval);
+function stopwatch() {
 
   stopwatchSeconds = 0;
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      ⏱️ Stopwatch
+      Stopwatch
     </h2>
 
     <div
       id="stopwatchDisplay"
-      class="big-number">
+      class="big-number"
+    >
       00:00:00
-    </div>
-
-    <div class="tool-row">
-
-      <button
-        class="primary-btn"
-        onclick="startStopwatch()">
-        Start
-      </button>
-
-      <button
-        class="primary-btn"
-        onclick="stopStopwatch()">
-        Stop
-      </button>
-
     </div>
 
     <button
       class="primary-btn"
-      onclick="resetStopwatch()">
+      onclick="startStopwatch()"
+    >
+      Start
+    </button>
+
+    <button
+      class="primary-btn"
+      onclick="stopStopwatch()"
+    >
+      Stop
+    </button>
+
+    <button
+      class="primary-btn"
+      onclick="resetStopwatch()"
+    >
       Reset
     </button>
 
@@ -1030,70 +906,61 @@ function resetStopwatch() {
 
 function updateStopwatch() {
 
-  const h =
-    String(
-      Math.floor(
-        stopwatchSeconds / 3600
-      )
-    ).padStart(2, "0");
+  const hours =
+    Math.floor(stopwatchSeconds / 3600);
 
-  const m =
-    String(
-      Math.floor(
-        (stopwatchSeconds % 3600) / 60
-      )
-    ).padStart(2, "0");
+  const minutes =
+    Math.floor((stopwatchSeconds % 3600) / 60);
 
-  const s =
-    String(
-      stopwatchSeconds % 60
-    ).padStart(2, "0");
+  const seconds =
+    stopwatchSeconds % 60;
 
 
-  document.getElementById(
-    "stopwatchDisplay"
-  ).textContent =
-    `${h}:${m}:${s}`;
+  document.getElementById("stopwatchDisplay")
+    .textContent =
+      `${String(hours).padStart(2, "0")}:` +
+      `${String(minutes).padStart(2, "0")}:` +
+      `${String(seconds).padStart(2, "0")}`;
 
 }
 
 
 /* =========================================
-   COUNTDOWN
+   COUNTDOWN TIMER
 ========================================= */
 
 let countdownInterval;
 
-function countdownTool() {
 
-  clearInterval(countdownInterval);
+function countdownTimer() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      ⏰ Countdown Timer
+      Countdown Timer
     </h2>
 
     <input
+      type="number"
       id="countdownSeconds"
       class="tool-input"
-      type="number"
-      min="1"
-      value="60"
       placeholder="Seconds"
+      min="1"
     >
-
-    <div
-      id="countdownDisplay"
-      class="big-number">
-      60
-    </div>
 
     <button
       class="primary-btn"
-      onclick="startCountdown()">
+      onclick="startCountdown()"
+    >
       Start Countdown
     </button>
+
+    <div
+      id="countdownDisplay"
+      class="big-number"
+    >
+      00:00
+    </div>
 
   `;
 
@@ -1106,37 +973,38 @@ function startCountdown() {
 
   let seconds =
     Number(
-      document.getElementById(
-        "countdownSeconds"
-      ).value
+      document.getElementById("countdownSeconds").value
     );
-
-  const display =
-    document.getElementById(
-      "countdownDisplay"
-    );
-
-  display.textContent = seconds;
 
 
   countdownInterval =
     setInterval(() => {
 
-      seconds--;
-
-      display.textContent =
-        seconds;
-
       if (seconds <= 0) {
 
-        clearInterval(
-          countdownInterval
-        );
+        clearInterval(countdownInterval);
 
-        display.textContent =
-          "🎉 Done!";
+        document.getElementById("countdownDisplay")
+          .textContent = "Time's Up!";
+
+        return;
 
       }
+
+
+      seconds--;
+
+      const minutes =
+        Math.floor(seconds / 60);
+
+      const secs =
+        seconds % 60;
+
+
+      document.getElementById("countdownDisplay")
+        .textContent =
+        `${String(minutes).padStart(2, "0")}:` +
+        `${String(secs).padStart(2, "0")}`;
 
     }, 1000);
 
@@ -1147,44 +1015,37 @@ function startCountdown() {
    DATE DIFFERENCE
 ========================================= */
 
-function dateTool() {
+function dateDifference() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      📅 Date Difference
+      Date Difference
     </h2>
 
-    <p class="tool-description">
-      Calculate the number of days between two dates.
-    </p>
-
-    <label>Start Date</label>
-
     <input
-      id="date1"
-      class="tool-input"
       type="date"
+      id="dateOne"
+      class="tool-input"
     >
 
-    <label>End Date</label>
-
     <input
-      id="date2"
-      class="tool-input"
       type="date"
+      id="dateTwo"
+      class="tool-input"
     >
 
     <button
       class="primary-btn"
-      onclick="calculateDateDifference()">
-      Calculate
+      onclick="calculateDateDifference()"
+    >
+      Calculate Difference
     </button>
 
     <div
       id="dateResult"
-      class="tool-result">
-    </div>
+      class="tool-result"
+    ></div>
 
   `;
 
@@ -1193,36 +1054,35 @@ function dateTool() {
 
 function calculateDateDifference() {
 
-  const a =
-    new Date(
-      document.getElementById(
-        "date1"
-      ).value
-    );
+  const date1 =
+    new Date(document.getElementById("dateOne").value);
 
-  const b =
-    new Date(
-      document.getElementById(
-        "date2"
-      ).value
-    );
+  const date2 =
+    new Date(document.getElementById("dateTwo").value);
 
 
-  if (isNaN(a) || isNaN(b))
+  if (isNaN(date1) || isNaN(date2)) {
+
+    document.getElementById("dateResult").textContent =
+      "Please select both dates.";
+
     return;
+
+  }
+
+
+  const difference =
+    Math.abs(date2 - date1);
 
 
   const days =
-    Math.abs(
-      b - a
-    ) /
-    (1000 * 60 * 60 * 24);
+    Math.ceil(
+      difference / (1000 * 60 * 60 * 24)
+    );
 
 
-  document.getElementById(
-    "dateResult"
-  ).textContent =
-    `${Math.round(days)} days`;
+  document.getElementById("dateResult").textContent =
+    `${days} days`;
 
 }
 
@@ -1231,48 +1091,33 @@ function calculateDateDifference() {
    COLOR CONVERTER
 ========================================= */
 
-function colorTool() {
+function colorConverter() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      🎨 Color Converter
+      Color Converter
     </h2>
-
-    <p class="tool-description">
-      Convert HEX colors to RGB.
-    </p>
 
     <input
       id="hexColor"
       class="tool-input"
-      value="#6366f1"
-      placeholder="#6366F1"
+      placeholder="Example: #6366f1"
     >
 
     <button
       class="primary-btn"
-      onclick="convertColor()">
+      onclick="convertColor()"
+    >
       Convert
     </button>
 
     <div
-      id="colorPreview"
-      style="
-        height:100px;
-        border-radius:15px;
-        margin-top:15px;
-      ">
-    </div>
-
-    <div
       id="colorResult"
-      class="tool-result">
-    </div>
+      class="tool-result"
+    ></div>
 
   `;
-
-  convertColor();
 
 }
 
@@ -1280,50 +1125,39 @@ function colorTool() {
 function convertColor() {
 
   let hex =
-    document.getElementById(
-      "hexColor"
-    ).value.trim();
+    document.getElementById("hexColor").value
+      .trim()
+      .replace("#", "");
 
-  if (hex[0] === "#")
-    hex = hex.slice(1);
 
-  if (!/^[0-9A-Fa-f]{6}$/.test(hex))
+  if (!/^[0-9A-Fa-f]{6}$/.test(hex)) {
+
+    document.getElementById("colorResult").textContent =
+      "Enter a valid 6-digit HEX color.";
+
     return;
+
+  }
 
 
   const r =
-    parseInt(
-      hex.substring(0, 2),
-      16
-    );
+    parseInt(hex.substring(0, 2), 16);
 
   const g =
-    parseInt(
-      hex.substring(2, 4),
-      16
-    );
+    parseInt(hex.substring(2, 4), 16);
 
   const b =
-    parseInt(
-      hex.substring(4, 6),
-      16
-    );
+    parseInt(hex.substring(4, 6), 16);
 
 
-  const rgb =
-    `rgb(${r}, ${g}, ${b})`;
+  document.getElementById("colorResult").innerHTML = `
 
+    HEX: #${hex.toUpperCase()}<br>
 
-  document.getElementById(
-    "colorPreview"
-  ).style.background =
-    "#" + hex;
+    RGB:
+    rgb(${r}, ${g}, ${b})
 
-
-  document.getElementById(
-    "colorResult"
-  ).textContent =
-    rgb;
+  `;
 
 }
 
@@ -1332,12 +1166,12 @@ function convertColor() {
    IMAGE RESIZER
 ========================================= */
 
-function imageTool() {
+function imageResizer() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      🖼️ Image Resizer
+      Image Resizer
     </h2>
 
     <p class="tool-description">
@@ -1345,37 +1179,30 @@ function imageTool() {
     </p>
 
     <input
-      id="resizeFile"
-      class="tool-input"
       type="file"
+      id="resizeImage"
+      class="tool-input"
       accept="image/*"
     >
 
-    <div class="tool-row">
-
-      <input
-        id="resizeWidth"
-        class="tool-input"
-        type="number"
-        placeholder="Width"
-      >
-
-      <input
-        id="resizeHeight"
-        class="tool-input"
-        type="number"
-        placeholder="Height"
-      >
-
-    </div>
+    <input
+      type="number"
+      id="resizeWidth"
+      class="tool-input"
+      placeholder="New width"
+    >
 
     <button
       class="primary-btn"
-      onclick="resizeImage()">
+      onclick="resizeImage()"
+    >
       Resize Image
     </button>
 
-    <div id="resizeResult"></div>
+    <div
+      id="resizeResult"
+      class="tool-result"
+    ></div>
 
   `;
 
@@ -1385,89 +1212,87 @@ function imageTool() {
 function resizeImage() {
 
   const file =
-    document.getElementById(
-      "resizeFile"
-    ).files[0];
+    document.getElementById("resizeImage").files[0];
 
   const width =
-    Number(
-      document.getElementById(
-        "resizeWidth"
-      ).value
-    );
-
-  const height =
-    Number(
-      document.getElementById(
-        "resizeHeight"
-      ).value
-    );
+    Number(document.getElementById("resizeWidth").value);
 
 
-  if (!file || !width || !height)
+  if (!file || !width) {
+
+    alert("Select an image and enter a width.");
+
     return;
 
+  }
 
-  const img =
-    new Image();
 
-  img.onload = () => {
+  const reader =
+    new FileReader();
 
-    const canvas =
-      document.createElement(
-        "canvas"
+
+  reader.onload = function(e) {
+
+    const image =
+      new Image();
+
+
+    image.onload = function() {
+
+      const canvas =
+        document.createElement("canvas");
+
+      const scale =
+        width / image.width;
+
+      canvas.width = width;
+
+      canvas.height =
+        image.height * scale;
+
+
+      const ctx =
+        canvas.getContext("2d");
+
+      ctx.drawImage(
+        image,
+        0,
+        0,
+        canvas.width,
+        canvas.height
       );
 
-    canvas.width = width;
 
-    canvas.height = height;
+      const link =
+        document.createElement("a");
 
-    const ctx =
-      canvas.getContext("2d");
+      link.download =
+        "toolify-resized-image.png";
 
-    ctx.drawImage(
-      img,
-      0,
-      0,
-      width,
-      height
-    );
+      link.href =
+        canvas.toDataURL("image/png");
+
+      link.textContent =
+        "Download Resized Image";
+
+      link.style.color =
+        "var(--primary)";
+
+      document.getElementById("resizeResult")
+        .innerHTML = "";
+
+      document.getElementById("resizeResult")
+        .appendChild(link);
+
+    };
 
 
-    canvas.toBlob(blob => {
-
-      const url =
-        URL.createObjectURL(blob);
-
-      document.getElementById(
-        "resizeResult"
-      ).innerHTML = `
-
-        <div class="tool-result">
-          Image resized successfully.
-        </div>
-
-        <a
-          href="${url}"
-          download="resized-image.png"
-          class="primary-btn"
-          style="
-            display:block;
-            text-align:center;
-            text-decoration:none;
-          ">
-          Download Image
-        </a>
-
-      `;
-
-    }, "image/png");
+    image.src = e.target.result;
 
   };
 
 
-  img.src =
-    URL.createObjectURL(file);
+  reader.readAsDataURL(file);
 
 }
 
@@ -1476,12 +1301,12 @@ function resizeImage() {
    IMAGE COMPRESSOR
 ========================================= */
 
-function compressorTool() {
+function imageCompressor() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      🗜️ Image Compressor
+      Image Compressor
     </h2>
 
     <p class="tool-description">
@@ -1489,9 +1314,9 @@ function compressorTool() {
     </p>
 
     <input
-      id="compressFile"
-      class="tool-input"
       type="file"
+      id="compressImage"
+      class="tool-input"
       accept="image/*"
     >
 
@@ -1500,22 +1325,25 @@ function compressorTool() {
     </label>
 
     <input
-      id="quality"
       type="range"
-      min="0.1"
-      max="1"
-      step="0.1"
-      value="0.7"
-      style="width:100%; margin:15px 0;"
+      id="compressionQuality"
+      min="10"
+      max="100"
+      value="70"
+      class="tool-input"
     >
 
     <button
       class="primary-btn"
-      onclick="compressImage()">
+      onclick="compressImage()"
+    >
       Compress Image
     </button>
 
-    <div id="compressResult"></div>
+    <div
+      id="compressResult"
+      class="tool-result"
+    ></div>
 
   `;
 
@@ -1525,99 +1353,88 @@ function compressorTool() {
 function compressImage() {
 
   const file =
-    document.getElementById(
-      "compressFile"
-    ).files[0];
+    document.getElementById("compressImage").files[0];
 
   const quality =
     Number(
-      document.getElementById(
-        "quality"
-      ).value
-    );
+      document.getElementById("compressionQuality").value
+    ) / 100;
 
 
-  if (!file)
+  if (!file) {
+
+    alert("Please select an image.");
+
     return;
 
-
-  const img =
-    new Image();
-
-  img.onload = () => {
-
-    const canvas =
-      document.createElement(
-        "canvas"
-      );
-
-    canvas.width =
-      img.width;
-
-    canvas.height =
-      img.height;
+  }
 
 
-    const ctx =
-      canvas.getContext("2d");
-
-    ctx.drawImage(
-      img,
-      0,
-      0
-    );
+  const reader =
+    new FileReader();
 
 
-    canvas.toBlob(
-      blob => {
+  reader.onload = function(e) {
 
-        const url =
-          URL.createObjectURL(
-            blob
-          );
+    const image =
+      new Image();
 
-        document.getElementById(
-          "compressResult"
-        ).innerHTML = `
 
-          <div class="tool-result">
+    image.onload = function() {
 
-            Original:
-            ${(file.size / 1024).toFixed(1)}
-            KB
+      const canvas =
+        document.createElement("canvas");
 
-            <br>
+      canvas.width =
+        image.width;
 
-            Compressed:
-            ${(blob.size / 1024).toFixed(1)}
-            KB
+      canvas.height =
+        image.height;
 
-          </div>
 
-          <a
-            href="${url}"
-            download="compressed-image.jpg"
-            class="primary-btn"
-            style="
-              display:block;
-              text-align:center;
-              text-decoration:none;
-            ">
-            Download Compressed Image
-          </a>
+      const ctx =
+        canvas.getContext("2d");
 
-        `;
+      ctx.drawImage(image, 0, 0);
 
-      },
-      "image/jpeg",
-      quality
-    );
+
+      const compressed =
+        canvas.toDataURL(
+          "image/jpeg",
+          quality
+        );
+
+
+      const link =
+        document.createElement("a");
+
+      link.href = compressed;
+
+      link.download =
+        "toolify-compressed.jpg";
+
+      link.textContent =
+        "Download Compressed Image";
+
+      link.style.color =
+        "var(--primary)";
+
+
+      document.getElementById("compressResult")
+        .innerHTML = "";
+
+      document.getElementById("compressResult")
+        .appendChild(link);
+
+    };
+
+
+    image.src = e.target.result;
 
   };
 
 
-  img.src =
-    URL.createObjectURL(file);
+  reader.readAsDataURL(file);
 
 }
 
@@ -1626,35 +1443,32 @@ function compressImage() {
    NUMBER CONVERTER
 ========================================= */
 
-function numberTool() {
+function numberConverter() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      🔢 Number Converter
+      Number Converter
     </h2>
 
-    <p class="tool-description">
-      Convert decimal numbers into other number systems.
-    </p>
-
     <input
-      id="numberInput"
-      class="tool-input"
       type="number"
-      value="255"
+      id="decimalNumber"
+      class="tool-input"
+      placeholder="Enter decimal number"
     >
 
     <button
       class="primary-btn"
-      onclick="convertNumber()">
+      onclick="convertNumber()"
+    >
       Convert
     </button>
 
     <div
       id="numberResult"
-      class="tool-result">
-    </div>
+      class="tool-result"
+    ></div>
 
   `;
 
@@ -1663,35 +1477,34 @@ function numberTool() {
 
 function convertNumber() {
 
-  const number =
+  const value =
     Number(
-      document.getElementById(
-        "numberInput"
-      ).value
+      document.getElementById("decimalNumber").value
     );
 
 
-  document.getElementById(
-    "numberResult"
-  ).innerHTML = `
+  if (isNaN(value)) {
+
+    document.getElementById("numberResult").textContent =
+      "Enter a valid number.";
+
+    return;
+
+  }
+
+
+  document.getElementById("numberResult").innerHTML = `
 
     Binary:
-    <strong>${number.toString(2)}</strong>
-
+    ${Math.trunc(value).toString(2)}
     <br>
 
     Octal:
-    <strong>${number.toString(8)}</strong>
-
-    <br>
-
-    Decimal:
-    <strong>${number.toString(10)}</strong>
-
+    ${Math.trunc(value).toString(8)}
     <br>
 
     Hexadecimal:
-    <strong>${number.toString(16).toUpperCase()}</strong>
+    ${Math.trunc(value).toString(16).toUpperCase()}
 
   `;
 
@@ -1702,17 +1515,13 @@ function convertNumber() {
    CASE CONVERTER
 ========================================= */
 
-function caseTool() {
+function caseConverter() {
 
   toolContent.innerHTML = `
 
     <h2 class="tool-title">
-      🔤 Case Converter
+      Case Converter
     </h2>
-
-    <p class="tool-description">
-      Convert your text into different cases.
-    </p>
 
     <textarea
       id="caseText"
@@ -1722,26 +1531,21 @@ function caseTool() {
 
     <button
       class="primary-btn"
-      onclick="upperCase()">
-      UPPERCASE
+      onclick="convertCase()"
+    >
+      Convert Text
     </button>
 
-    <button
-      class="primary-btn"
-      onclick="lowerCase()">
-      lowercase
-    </button>
+    <div
+      id="caseResult"
+      class="result-box"
+    ></div>
 
     <button
-      class="primary-btn"
-      onclick="titleCase()">
-      Title Case
-    </button>
-
-    <button
-      class="primary-btn"
-      onclick="sentenceCase()">
-      Sentence case
+      class="copy-btn"
+      onclick="copyText('caseResult')"
+    >
+      Copy
     </button>
 
   `;
@@ -1749,101 +1553,52 @@ function caseTool() {
 }
 
 
-function upperCase() {
+function convertCase() {
 
   const text =
-    document.getElementById(
-      "caseText"
-    );
-
-  text.value =
-    text.value.toUpperCase();
-
-}
+    document.getElementById("caseText").value;
 
 
-function lowerCase() {
-
-  const text =
-    document.getElementById(
-      "caseText"
-    );
-
-  text.value =
-    text.value.toLowerCase();
-
-}
+  const result =
+    document.getElementById("caseResult");
 
 
-function titleCase() {
+  result.innerHTML = `
 
-  const text =
-    document.getElementById(
-      "caseText"
-    );
+    <strong>UPPERCASE:</strong><br>
+    ${text.toUpperCase()}<br><br>
 
-  text.value =
-    text.value
-      .toLowerCase()
-      .replace(
-        /\b\w/g,
-        char =>
-          char.toUpperCase()
-      );
+    <strong>lowercase:</strong><br>
+    ${text.toLowerCase()}
 
-}
-
-
-function sentenceCase() {
-
-  const text =
-    document.getElementById(
-      "caseText"
-    );
-
-  text.value =
-    text.value
-      .toLowerCase()
-      .replace(
-        /(^\s*\w|[.!?]\s*\w)/g,
-        char =>
-          char.toUpperCase()
-      );
+  `;
 
 }
 
 
 /* =========================================
-   COPY
+   COPY FUNCTION
 ========================================= */
 
-function copyText(id) {
+function copyText(elementId) {
 
   const element =
-    document.getElementById(id);
+    document.getElementById(elementId);
 
-  navigator.clipboard.writeText(
-    element.textContent
-  );
+  const text =
+    element.textContent;
+
+
+  navigator.clipboard.writeText(text)
+    .then(() => {
+
+      alert("Copied!");
+
+    })
+    .catch(() => {
+
+      alert("Copy failed.");
+
+    });
 
 }
-
-
-/* =========================================
-   ESCAPE MODAL
-========================================= */
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key === "Escape"
-    ) {
-
-      closeTool();
-
-    }
-
-  }
-);
